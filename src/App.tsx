@@ -1,4 +1,4 @@
-import React, { FC, ChangeEvent, useState } from "react";
+import { FC, ChangeEvent, useState } from "react";
 import "./App.css";
 import { Task } from "./Interface";
 import TodoTask from "./Components/TodoTask";
@@ -34,6 +34,13 @@ const App: FC = () => {
     setTaskDays(0);
   };
 
+  const completeTask = (taskNameToDelete: string): void => {
+    setTaskList(
+      taskList.filter((task) => {
+        return task.name !== taskNameToDelete;
+      })
+    );
+  };
   return (
     <>
       <div className="bg-gradient-to-r from-purple-500 to-orange-500 w-screen h-screen m-0 flex flex-col items-center">
@@ -63,15 +70,17 @@ const App: FC = () => {
             onChange={handleChange}
           />
           <button
-            className="bg-purple-500 hover:bg-purple-700 text-white font-bold  mx-6 py-2 px-4 rounded"
+            className="bg-green-500 hover:bg-green-700 text-white font-light  mx-6 py-2 px-4 rounded"
             onClick={addTask}
           >
-            Button
+            Add Task
           </button>
         </div>
         <div className="taskList">
           {taskList.map((task: Task, key: number) => {
-            return <TodoTask key={key} task={task} />;
+            return (
+              <TodoTask key={key} task={task} completeTask={completeTask} />
+            );
           })}
         </div>
       </div>
